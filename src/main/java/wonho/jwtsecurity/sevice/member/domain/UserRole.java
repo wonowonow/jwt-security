@@ -33,4 +33,8 @@ public class UserRole {
     private UserRole(AuthorityEnum authority) {
         this.authority = authority;
     }
+
+    public static UserRole from(AuthorityEnum authority) {
+        return UserRole.builder().authority(authority).build();
+    }
 }
