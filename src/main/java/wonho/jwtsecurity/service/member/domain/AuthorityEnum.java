@@ -1,4 +1,4 @@
-package wonho.jwtsecurity.sevice.member.domain;
+package wonho.jwtsecurity.service.member.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

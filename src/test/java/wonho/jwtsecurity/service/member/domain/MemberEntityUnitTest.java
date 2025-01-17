@@ -1,4 +1,4 @@
-package wonho.jwtsecurity.sevice.member.domain;
+package wonho.jwtsecurity.service.member.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

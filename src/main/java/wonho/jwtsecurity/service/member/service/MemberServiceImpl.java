@@ -1,19 +1,21 @@
-package wonho.jwtsecurity.sevice.member.service;
+package wonho.jwtsecurity.service.member.service;
 
-import static wonho.jwtsecurity.sevice.member.domain.AuthorityEnum.ROLE_USER;
+import static wonho.jwtsecurity.service.member.domain.AuthorityEnum.ROLE_USER;
 
 import java.util.HashSet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import wonho.jwtsecurity.sevice.member.domain.Member;
-import wonho.jwtsecurity.sevice.member.domain.repository.MemberRepository;
-import wonho.jwtsecurity.sevice.member.domain.repository.UserRoleRepository;
-import wonho.jwtsecurity.sevice.member.dto.req.MemberCreateRequestDto;
-import wonho.jwtsecurity.sevice.member.dto.res.MemberResponseDto;
-import wonho.jwtsecurity.sevice.member.service.interfaces.MemberService;
+import org.springframework.transaction.annotation.Transactional;
+import wonho.jwtsecurity.service.member.domain.Member;
+import wonho.jwtsecurity.service.member.domain.repository.MemberRepository;
+import wonho.jwtsecurity.service.member.domain.repository.UserRoleRepository;
+import wonho.jwtsecurity.service.member.dto.req.MemberCreateRequestDto;
+import wonho.jwtsecurity.service.member.dto.res.MemberResponseDto;
+import wonho.jwtsecurity.service.member.service.interfaces.MemberService;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 

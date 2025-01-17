@@ -1,4 +1,4 @@
-package wonho.jwtsecurity.sevice.member.dto.req;
+package wonho.jwtsecurity.service.member.dto.req;
 
 public record MemberCreateRequestDto (
         String username,

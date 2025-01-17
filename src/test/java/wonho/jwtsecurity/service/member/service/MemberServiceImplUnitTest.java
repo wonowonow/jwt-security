@@ -1,4 +1,4 @@
-package wonho.jwtsecurity.sevice.member.service;
+package wonho.jwtsecurity.service.member.service;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,14 +18,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import wonho.jwtsecurity.sevice.member.domain.AuthorityEnum;
-import wonho.jwtsecurity.sevice.member.domain.Member;
-import wonho.jwtsecurity.sevice.member.domain.MemberUserRole;
-import wonho.jwtsecurity.sevice.member.domain.UserRole;
-import wonho.jwtsecurity.sevice.member.domain.repository.MemberRepository;
-import wonho.jwtsecurity.sevice.member.domain.repository.UserRoleRepository;
-import wonho.jwtsecurity.sevice.member.dto.req.MemberCreateRequestDto;
-import wonho.jwtsecurity.sevice.member.dto.res.MemberResponseDto;
+import wonho.jwtsecurity.service.member.domain.AuthorityEnum;
+import wonho.jwtsecurity.service.member.domain.Member;
+import wonho.jwtsecurity.service.member.domain.MemberUserRole;
+import wonho.jwtsecurity.service.member.domain.UserRole;
+import wonho.jwtsecurity.service.member.domain.repository.MemberRepository;
+import wonho.jwtsecurity.service.member.domain.repository.UserRoleRepository;
+import wonho.jwtsecurity.service.member.dto.req.MemberCreateRequestDto;
+import wonho.jwtsecurity.service.member.dto.res.MemberResponseDto;
 
 class MemberServiceImplUnitTest {
 

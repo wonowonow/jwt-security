@@ -1,12 +1,9 @@
-package wonho.jwtsecurity.sevice.member.dto.res;
+package wonho.jwtsecurity.service.member.dto.res;
 
 import static lombok.AccessLevel.*;
 
-import java.util.List;
-import java.util.Set;
-import lombok.AccessLevel;
 import lombok.Builder;
-import wonho.jwtsecurity.sevice.member.domain.MemberUserRole;
+import wonho.jwtsecurity.service.member.domain.MemberUserRole;
 
 @Builder(access = PRIVATE)
 public record MemberAuthorityResponseDto(
