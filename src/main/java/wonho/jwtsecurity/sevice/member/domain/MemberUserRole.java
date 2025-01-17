@@ -29,7 +29,7 @@ public class MemberUserRole {
     private Member member;
 
     @ManyToOne
-    @JoinColumn(name = "member_id", nullable = false)
+    @JoinColumn(name = "user_role_id", nullable = false)
     private UserRole authority;
 
     @Builder(access = PRIVATE)
