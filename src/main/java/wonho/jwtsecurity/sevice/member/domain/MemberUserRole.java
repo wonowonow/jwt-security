@@ -37,4 +37,9 @@ public class MemberUserRole {
         this.member = member;
         this.authority = authority;
     }
+
+    public static MemberUserRole of(Member member, UserRole authority) {
+
+        return MemberUserRole.builder().member(member).authority(authority).build();
+    }
 }
