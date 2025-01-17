@@ -1,9 +1,10 @@
-package wonho.jwtsecurity.sevice.member.domain;
+package wonho.jwtsecurity.service.member.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class Member {
     @Column(nullable = false, length = 15)
     private String nickname;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<MemberUserRole> userRoles = new HashSet<>();
 
     @Builder(access = PRIVATE)
@@ -45,5 +46,20 @@ public class Member {
         this.password = password;
         this.nickname = nickname;
         this.userRoles = userRoles;
+    }
+
+    public static Member of(String username, String password, String nickname,
+            Set<MemberUserRole> userRoles) {
+
+        return Member.builder()
+                     .username(username)
+                     .password(password)
+                     .nickname(nickname)
+                     .userRoles(userRoles)
+                     .build();
+    }
+
+    public void addUserRole(UserRole userRole) {
+        this.userRoles.add(MemberUserRole.of(this, userRole));
     }
 }

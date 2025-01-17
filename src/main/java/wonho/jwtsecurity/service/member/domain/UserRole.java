@@ -1,4 +1,4 @@
-package wonho.jwtsecurity.sevice.member.domain;
+package wonho.jwtsecurity.service.member.domain;
 
 import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -32,5 +32,9 @@ public class UserRole {
     @Builder(access = PRIVATE)
     private UserRole(AuthorityEnum authority) {
         this.authority = authority;
+    }
+
+    public static UserRole from(AuthorityEnum authority) {
+        return UserRole.builder().authority(authority).build();
     }
 }

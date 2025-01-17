@@ -1,4 +1,4 @@
-package wonho.jwtsecurity.sevice.member.domain;
+package wonho.jwtsecurity.service.member.domain;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PRIVATE;
@@ -36,5 +36,10 @@ public class MemberUserRole {
     private MemberUserRole(Member member, UserRole authority) {
         this.member = member;
         this.authority = authority;
+    }
+
+    public static MemberUserRole of(Member member, UserRole authority) {
+
+        return MemberUserRole.builder().member(member).authority(authority).build();
     }
 }

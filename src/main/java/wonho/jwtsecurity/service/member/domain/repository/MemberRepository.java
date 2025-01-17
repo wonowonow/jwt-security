@@ -1,7 +1,7 @@
-package wonho.jwtsecurity.sevice.member.domain.repository;
+package wonho.jwtsecurity.service.member.domain.repository;
 
 import java.util.Optional;
-import wonho.jwtsecurity.sevice.member.domain.Member;
+import wonho.jwtsecurity.service.member.domain.Member;
 
 public interface MemberRepository {
 
