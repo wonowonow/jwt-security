@@ -70,9 +70,11 @@ class JwtUtilTest {
                 .signWith(Keys.hmacShaKeyFor(Base64.getDecoder().decode(secretKey)), SignatureAlgorithm.HS256)
                 .compact();
 
-        // When / Then
-        JwtException exception = assertThrows(JwtException.class, () -> jwtUtil.validateToken(expiredToken));
-        assertEquals("ExceptionCode.TOKEN_EXPIRED", exception.getMessage());
+        // When
+        boolean result = jwtUtil.validateToken(expiredToken);
+
+        // Then
+        assertEquals(false, result);
     }
 
     @Test
@@ -124,8 +126,10 @@ class JwtUtilTest {
         // Given
         String token = "진짜진짜_이상한_토큰";
 
-        // When & Then
-        JwtException exception = assertThrows(JwtException.class, () -> jwtUtil.substringToken(token));
-        assertEquals("ExceptionCode.NOT_FOUND_TOKEN", exception.getMessage());
+        // When
+        String result = jwtUtil.substringToken(token);
+
+        // Then
+        assertEquals(null, result);
     }
 }
