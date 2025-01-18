@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import wonho.jwtsecurity.service.member.dto.req.MemberCreateRequestDto;
 import wonho.jwtsecurity.service.member.dto.req.MemberLoginRequestDto;
+import wonho.jwtsecurity.service.member.dto.req.RefreshTokenRequestDto;
 import wonho.jwtsecurity.service.member.dto.res.MemberResponseDto;
+import wonho.jwtsecurity.service.member.dto.res.AllTokenResponseDto;
 import wonho.jwtsecurity.service.member.dto.res.TokenResponseDto;
 import wonho.jwtsecurity.service.member.service.interfaces.MemberService;
 
@@ -28,7 +30,7 @@ public class MemberController {
     }
 
     @PostMapping("/sign")
-    public ResponseEntity<TokenResponseDto> sign(
+    public ResponseEntity<AllTokenResponseDto> sign(
             @RequestBody final MemberLoginRequestDto memberLoginRequestDto
     ) {
 
@@ -37,11 +39,11 @@ public class MemberController {
     }
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<String> refreshToken(
-            @RequestBody final String refreshToken
+    public ResponseEntity<TokenResponseDto> refreshToken(
+            @RequestBody final RefreshTokenRequestDto requestDto
     ) {
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(memberService.refreshToken(refreshToken));
+                .body(memberService.refreshToken(requestDto.refreshToken()));
     }
 }

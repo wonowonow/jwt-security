@@ -3,12 +3,13 @@ package wonho.jwtsecurity.service.member.service.interfaces;
 import wonho.jwtsecurity.service.member.dto.req.MemberCreateRequestDto;
 import wonho.jwtsecurity.service.member.dto.req.MemberLoginRequestDto;
 import wonho.jwtsecurity.service.member.dto.res.MemberResponseDto;
+import wonho.jwtsecurity.service.member.dto.res.AllTokenResponseDto;
 import wonho.jwtsecurity.service.member.dto.res.TokenResponseDto;
 
 public interface MemberService {
     MemberResponseDto signUp(MemberCreateRequestDto requestDto);
 
-    TokenResponseDto sign(MemberLoginRequestDto requestDto);
+    AllTokenResponseDto sign(MemberLoginRequestDto requestDto);
 
     /**
      * 리프레시 토큰을 통해 액세스 토큰을 발급 받는 로직입니다.
@@ -20,5 +21,5 @@ public interface MemberService {
      * @param refreshToken
      * @return
      */
-    String refreshToken(String refreshToken);
+    TokenResponseDto refreshToken(String refreshToken);
 }

@@ -16,6 +16,7 @@ import wonho.jwtsecurity.service.member.domain.repository.UserRoleRepository;
 import wonho.jwtsecurity.service.member.dto.req.MemberCreateRequestDto;
 import wonho.jwtsecurity.service.member.dto.req.MemberLoginRequestDto;
 import wonho.jwtsecurity.service.member.dto.res.MemberResponseDto;
+import wonho.jwtsecurity.service.member.dto.res.AllTokenResponseDto;
 import wonho.jwtsecurity.service.member.dto.res.TokenResponseDto;
 import wonho.jwtsecurity.service.member.service.interfaces.MemberService;
 
@@ -46,7 +47,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public TokenResponseDto sign(MemberLoginRequestDto requestDto) {
+    public AllTokenResponseDto sign(MemberLoginRequestDto requestDto) {
 
         Member member = memberRepository.findByUsername(requestDto.username())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디 입니다."));
@@ -59,11 +60,11 @@ public class MemberServiceImpl implements MemberService {
         String refreshToken = jwtUtil.createRefreshToken(member.getUsername());
         refreshTokenRepository.save(member.getUsername(), refreshToken);
 
-        return TokenResponseDto.of(token, refreshToken);
+        return AllTokenResponseDto.of(token, refreshToken);
     }
 
     @Override
-    public String refreshToken(String refreshToken) {
+    public TokenResponseDto refreshToken(String refreshToken) {
 
         refreshToken = jwtUtil.substringToken(refreshToken);
 
@@ -86,6 +87,6 @@ public class MemberServiceImpl implements MemberService {
             throw new IllegalArgumentException("존재하지 않는 아이디 입니다.");
         }
 
-        return jwtUtil.createToken(username);
+        return TokenResponseDto.from(jwtUtil.createToken(username));
     }
 }

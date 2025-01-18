@@ -6,15 +6,13 @@ import lombok.Builder;
 
 @Builder(access = PRIVATE)
 public record TokenResponseDto(
-        String token,
-        String refreshToken
+        String token
 ) {
 
-    public static TokenResponseDto of(String token, String refreshToken) {
+    public static TokenResponseDto from(String token) {
 
         return TokenResponseDto.builder()
                 .token(token)
-                .refreshToken(refreshToken)
                 .build();
     }
 }
