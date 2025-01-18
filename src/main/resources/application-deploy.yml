@@ -1,0 +1,29 @@
+spring:
+  config:
+    activate:
+      on-profile: deploy
+
+  datasource:
+    url: ${DEPLOY_POSTGRES_DB}
+    username: ${DEPLOY_POSTGRES_USER}
+    password: ${DEPLOY_POSTGRES_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ${DEPLOY_REDIS_PASSWORD}
+
+jwt:
+  secret: ${JWT_SECRET_FOR_DEPLOY}

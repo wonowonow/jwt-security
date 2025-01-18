@@ -85,7 +85,7 @@ class MemberServiceImplUnitTest {
 
         MemberCreateRequestDto requestDto = new MemberCreateRequestDto(username, password, nickname);
 
-        when(memberRepository.findByUsername(username)).thenReturn(Optional.of(mock(Member.class)));
+        when(memberRepository.existsByUsername(username)).thenReturn(true);
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
