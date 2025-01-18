@@ -4,6 +4,7 @@ services:
     image: ${DOCKER_HUB_USERNAME}/jwt-security:latest
     container_name: jwt-security
     build:
+      context: .
       dockerfile: Dockerfile
       args:
         FILE_DIRECTORY: ./build/libs/*.jar
