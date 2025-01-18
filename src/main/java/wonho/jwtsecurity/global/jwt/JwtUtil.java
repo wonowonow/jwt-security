@@ -21,6 +21,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -54,9 +55,11 @@ public class JwtUtil {
         header.put("typ", "JWT");
         header.put("alg", signatureAlgorithm.getValue());
 
-        return BEARER +
-                Jwts.builder()
+        return Jwts.builder()
                         .setHeader(header)
+                        .setId(UUID.randomUUID().toString())
+                        .setIssuer("jwt-security")
+                        .setAudience("jwt-security-client")
                         .claim(USERNAME, username)
                         .setIssuedAt(date)
                         .setExpiration(new Date(date.getTime() + EXPIRATION_TIME))
