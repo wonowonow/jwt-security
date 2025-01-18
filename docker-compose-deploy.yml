@@ -16,6 +16,7 @@ services:
       - jwt-security-db
       - jwt-security-redis
     environment:
+      POSTGRES_HOST: jwt-security-db
       DEPLOY_POSTGRES_DB: ${DEPLOY_POSTGRES_DB}
       DEPLOY_POSTGRES_USER: ${DEPLOY_POSTGRES_USER}
       DEPLOY_POSTGRES_PASSWORD: ${DEPLOY_POSTGRES_PASSWORD}
