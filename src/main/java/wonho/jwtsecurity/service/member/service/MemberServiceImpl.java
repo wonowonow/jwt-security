@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import wonho.jwtsecurity.global.jwt.JwtUtil;
 import wonho.jwtsecurity.service.member.domain.Member;
 import wonho.jwtsecurity.service.member.domain.repository.MemberRepository;
+import wonho.jwtsecurity.service.member.domain.repository.RefreshTokenRepository;
 import wonho.jwtsecurity.service.member.domain.repository.UserRoleRepository;
 import wonho.jwtsecurity.service.member.dto.req.MemberCreateRequestDto;
 import wonho.jwtsecurity.service.member.dto.req.MemberLoginRequestDto;
@@ -26,6 +27,7 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
     private final UserRoleRepository userRoleRepository;
     private final JwtUtil jwtUtil;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     @Override
     public MemberResponseDto signUp(MemberCreateRequestDto requestDto) {
@@ -40,7 +42,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public TokenResponseDto sign(MemberLoginRequestDto requestDto) {
 
         Member member = memberRepository.findByUsername(requestDto.username())
@@ -50,6 +51,10 @@ public class MemberServiceImpl implements MemberService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
 
-        return TokenResponseDto.from(jwtUtil.createToken(member.getUsername()));
+        String token = jwtUtil.createToken(member.getUsername());
+        String refreshToken = jwtUtil.createRefreshToken(member.getUsername());
+        refreshTokenRepository.save(member.getUsername(), refreshToken);
+
+        return TokenResponseDto.of(token, refreshToken);
     }
 }

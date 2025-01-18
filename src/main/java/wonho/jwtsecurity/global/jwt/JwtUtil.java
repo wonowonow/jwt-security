@@ -9,7 +9,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
-import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import java.security.Key;
 import java.util.Base64;
@@ -17,7 +16,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -32,6 +30,7 @@ public class JwtUtil {
     private static final String BEARER = "Bearer ";
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final Long EXPIRATION_TIME = 60 * 60 * 1000L;
+    private static final Long REFRESH_TOKEN_EXPIRATION_TIME = 60 * 60 * 1000L * 24 * 7;
     private static final String USERNAME = "Username";
 
     public JwtUtil(@Value("${jwt.secret}") String secret) {
@@ -57,6 +56,26 @@ public class JwtUtil {
                         .setExpiration(new Date(date.getTime() + EXPIRATION_TIME))
                         .signWith(key, signatureAlgorithm)
                         .compact();
+    }
+
+    public String createRefreshToken(String username) {
+
+        Date date = new Date();
+
+        Map<String, Object> header = new HashMap<>();
+        header.put("typ", "JWT");
+        header.put("alg", signatureAlgorithm.getValue());
+
+        return Jwts.builder()
+                .setHeader(header)
+                .setId(UUID.randomUUID().toString())
+                .setIssuer("jwt-security")
+                .setAudience("jwt-security-client")
+                .claim(USERNAME, username)
+                .setIssuedAt(date)
+                .setExpiration(new Date(date.getTime() + REFRESH_TOKEN_EXPIRATION_TIME))
+                .signWith(key, signatureAlgorithm)
+                .compact();
     }
 
     public boolean validateToken(String token) {

@@ -1,19 +1,20 @@
 package wonho.jwtsecurity.service.member.dto.res;
 
-import static lombok.AccessLevel.*;
+import static lombok.AccessLevel.PRIVATE;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 
 @Builder(access = PRIVATE)
 public record TokenResponseDto(
-        String token
+        String token,
+        String refreshToken
 ) {
 
-    public static TokenResponseDto from(String token) {
+    public static TokenResponseDto of(String token, String refreshToken) {
 
         return TokenResponseDto.builder()
                 .token(token)
+                .refreshToken(refreshToken)
                 .build();
     }
 }
