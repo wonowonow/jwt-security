@@ -17,15 +17,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Component
 public class JwtUtil {
-
-    @Value("${jwt.secret}")
-    private String secret;
 
     private Key key;
 
@@ -36,8 +34,7 @@ public class JwtUtil {
     private static final Long EXPIRATION_TIME = 60 * 60 * 1000L;
     private static final String USERNAME = "Username";
 
-    @PostConstruct
-    public void init() {
+    public JwtUtil(@Value("${jwt.secret}") String secret) {
         byte[] bytes = Base64.getDecoder().decode(secret);
         key = Keys.hmacShaKeyFor(bytes);
     }
