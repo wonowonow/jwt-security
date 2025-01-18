@@ -4,7 +4,7 @@ spring:
       on-profile: deploy
 
   datasource:
-    url: ${DEPLOY_POSTGRES_DB}
+    url: jdbc:postgresql://${POSTGRES_HOST}:5432/${DEPLOY_POSTGRES_DB}
     username: ${DEPLOY_POSTGRES_USER}
     password: ${DEPLOY_POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
