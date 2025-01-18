@@ -82,6 +82,12 @@ jobs:
           username: ${{ env.AWS_EC2_USERNAME }}
           key: ${{ env.AWS_EC2_SSH_KEY }}
           script: |
+            export DOCKER_HUB_USERNAME=${{ env.DOCKER_HUB_USERNAME }}
+            export DEPLOY_POSTGRES_DB=${{ env.DEPLOY_POSTGRES_DB }}
+            export DEPLOY_POSTGRES_USER=${{ env.DEPLOY_POSTGRES_USER }}
+            export DEPLOY_POSTGRES_PASSWORD=${{ env.DEPLOY_POSTGRES_PASSWORD }}
+            export DEPLOY_REDIS_PASSWORD=${{ env.DEPLOY_REDIS_PASSWORD }}
+            export JWT_SECRET_FOR_DEPLOY=${{ env.JWT_SECRET_FOR_DEPLOY }}
             echo ${{ env.DOCKER_HUB_TOKEN }} | docker login -u ${{ env.DOCKER_HUB_USERNAME }} --password-stdin
             docker pull ${{ env.DOCKER_HUB_USERNAME }}/jwt-security:latest
             docker-compose -f ./docker-compose-deploy.yml down
