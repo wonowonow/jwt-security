@@ -14,6 +14,12 @@ services:
     depends_on:
       - jwt-security-db
       - jwt-security-redis
+    environment:
+      DEPLOY_POSTGRES_DB: ${DEPLOY_POSTGRES_DB}
+      DEPLOY_POSTGRES_USER: ${DEPLOY_POSTGRES_USER}
+      DEPLOY_POSTGRES_PASSWORD: ${DEPLOY_POSTGRES_PASSWORD}
+      DEPLOY_REDIS_PASSWORD: ${DEPLOY_REDIS_PASSWORD}
+      JWT_SECRET_FOR_DEV: ${JWT_SECRET_FOR_DEPLOY}
 
   jwt-security-db:
     image: postgres:latest

@@ -10,4 +10,4 @@ RUN mkdir /app
 ARG JAR_FILE=${FILE_DIRECTORY}/build/libs/*.jar
 COPY ${JAR_FILE} /app/app.jar
 
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=deploy", "-jar", "/app/app.jar"]
