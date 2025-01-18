@@ -27,6 +27,13 @@ public class MemberServiceImpl implements MemberService {
     private final UserRoleRepository userRoleRepository;
     private final JwtUtil jwtUtil;
 
+    /**
+     * Registers a new member in the system.
+     *
+     * @param requestDto The data transfer object containing member registration details
+     * @return A response DTO representing the newly created member
+     * @throws IllegalArgumentException If the username already exists or the default user role cannot be found
+     */
     @Override
     public MemberResponseDto signUp(MemberCreateRequestDto requestDto) {
 
@@ -39,6 +46,13 @@ public class MemberServiceImpl implements MemberService {
         return MemberResponseDto.from(memberRepository.save(member));
     }
 
+    /**
+     * Authenticates a member and generates a JWT token for successful login.
+     *
+     * @param requestDto The login request containing username and password
+     * @return A TokenResponseDto containing the generated JWT token
+     * @throws IllegalArgumentException If the username does not exist or the password is incorrect
+     */
     @Override
     @Transactional(readOnly = true)
     public TokenResponseDto sign(MemberLoginRequestDto requestDto) {

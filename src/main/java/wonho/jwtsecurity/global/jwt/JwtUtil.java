@@ -40,12 +40,36 @@ public class JwtUtil {
     private static final Long EXPIRATION_TIME = 60 * 60 * 1000L;
     private static final String USERNAME = "Username";
 
+    /**
+     * Initializes the JWT signing key by decoding the base64-encoded secret.
+     *
+     * This method is annotated with {@code @PostConstruct} to ensure it is called automatically
+     * after the bean has been constructed and dependencies have been injected. It decodes the
+     * base64-encoded secret and generates an HMAC-SHA key for JWT token signing and verification.
+     *
+     * @throws IllegalArgumentException if the secret cannot be decoded or is invalid
+     */
     @PostConstruct
     public void init() {
         byte[] bytes = Base64.getDecoder().decode(secret);
         key = Keys.hmacShaKeyFor(bytes);
     }
 
+    /**
+     * Generates a JSON Web Token (JWT) for the given username.
+     *
+     * @param username the username to include in the token's claims
+     * @return a complete JWT string prefixed with "Bearer ", including headers, claims, and signature
+     *
+     * @throws IllegalArgumentException if the username is null or empty
+     *
+     * The token includes:
+     * - A header specifying token type (JWT) and algorithm
+     * - A claim containing the username
+     * - Issued at timestamp
+     * - Expiration timestamp (set to a predefined duration from issue time)
+     * - Signed with the configured cryptographic key
+     */
     public String createToken(String username) {
 
         Date date = new Date();
@@ -64,6 +88,17 @@ public class JwtUtil {
                         .compact();
     }
 
+    /**
+     * Validates the provided JSON Web Token (JWT).
+     *
+     * @param token the JWT to validate
+     * @return true if the token is valid
+     * @throws JwtException if the token is invalid, with specific error codes:
+     *         - TOKEN_INVALID for security, malformed, or signature-related issues
+     *         - TOKEN_EXPIRED for expired tokens
+     *         - TOKEN_UNSUPPORTED for unsupported token formats
+     *         - TOKEN_EMPTY for null or empty tokens
+     */
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
@@ -79,6 +114,13 @@ public class JwtUtil {
         }
     }
 
+    /**
+     * Extracts and returns the claims (payload) from a JSON Web Token (JWT).
+     *
+     * @param token The JWT from which to extract claims
+     * @return Claims object containing the token's payload information
+     * @throws JwtException if the token is invalid or cannot be parsed
+     */
     public Claims getUserInfoFromToken(String token) {
 
         return Jwts.parserBuilder()
@@ -88,6 +130,13 @@ public class JwtUtil {
                 .getBody();
     }
 
+    /**
+     * Extracts the actual token from a bearer token string.
+     *
+     * @param token The full bearer token string to process
+     * @return The token without the "Bearer " prefix
+     * @throws JwtException if the token is empty or does not start with "Bearer "
+     */
     public String substringToken(String token) {
         if (StringUtils.hasText(token) && token.startsWith(BEARER)) {
             return token.substring(BEARER.length());
@@ -96,6 +145,13 @@ public class JwtUtil {
         }
     }
 
+    /**
+     * Retrieves the JWT from the Authorization header of an HTTP request.
+     *
+     * @param req the HttpServletRequest containing the Authorization header
+     * @return the extracted JWT token without the "Bearer " prefix
+     * @throws JwtException if the token is invalid or not found in the request header
+     */
     public String getTokenFromRequest(HttpServletRequest req) {
         String token = req.getHeader(AUTHORIZATION_HEADER);
 

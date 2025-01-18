@@ -18,6 +18,12 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    /**
+     * Handles user registration by processing a signup request.
+     *
+     * @param memberCreateRequestDto The data transfer object containing user registration details
+     * @return A ResponseEntity with a 201 Created status and the created member's details
+     */
     @PostMapping("/signup")
     public ResponseEntity<MemberResponseDto> signUp(
             @RequestBody final MemberCreateRequestDto memberCreateRequestDto
@@ -27,6 +33,12 @@ public class MemberController {
                 .body(memberService.signUp(memberCreateRequestDto));
     }
 
+    /**
+     * Handles user login by processing the provided login credentials.
+     *
+     * @param memberLoginRequestDto The login request containing user credentials
+     * @return A ResponseEntity with a TokenResponseDto containing authentication tokens
+     */
     @PostMapping("/sign")
     public ResponseEntity<TokenResponseDto> sign(
             @RequestBody final MemberLoginRequestDto memberLoginRequestDto
