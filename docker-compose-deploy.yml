@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  jwt-security:
+    image: ${DOCKER_HUB_USERNAME}/jwt-security:latest
+    container_name: jwt-security
+    build:
+      dockerfile: Dockerfile
+      args:
+        FILE_DIRECTORY: ./build/libs/*.jar
+    ports:
+      - "8080:8080"
+    stop_grace_period: 15s
+    stop_signal: SIGTERM
+    depends_on:
+      - jwt-security-db
+      - jwt-security-redis
+
+  jwt-security-db:
+    image: postgres:latest
+    container_name: jwt-security-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${DEPLOY_POSTGRES_DB}
+      POSTGRES_USER: ${DEPLOY_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${DEPLOY_POSTGRES_PASSWORD}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  jwt-security-redis:
+    image: redis:latest
+    container_name: jwt-security-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass ${DEPLOY_REDIS_PASSWORD}
+    volumes:
+      - redis-data:/data
+
+volumes:
+  db-data:
+    driver: local
+  redis-data:
+    driver: local
