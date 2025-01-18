@@ -111,9 +111,8 @@ public class JwtUtil {
     public String substringToken(String token) {
         if (StringUtils.hasText(token) && token.startsWith(BEARER)) {
             return token.substring(BEARER.length());
-        } else {
-            throw new JwtException("ExceptionCode.NOT_FOUND_TOKEN");
         }
+        return null;
     }
 
     public String getTokenFromRequest(HttpServletRequest req) {
