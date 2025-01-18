@@ -8,4 +8,5 @@ import wonho.jwtsecurity.service.member.domain.repository.MemberRepository;
 @Repository
 public interface MemberJpaRepository extends JpaRepository<Member, Long>, MemberRepository {
 
+    boolean existsByUsername(String username);
 }

@@ -8,4 +8,6 @@ public interface MemberRepository {
     Member save(Member member);
 
     Optional<Member> findByUsername(String username);
+
+    boolean existsByUsername(String username);
 }
