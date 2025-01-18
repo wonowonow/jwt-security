@@ -74,5 +74,5 @@ jobs:
           script: |
             echo ${{ env.DOCKER_HUB_TOKEN }} | docker login -u ${{ env.DOCKER_HUB_USERNAME }} --password-stdin
             docker pull ${{ env.DOCKER_HUB_USERNAME }}/jwt-security:latest
-            docker compose -f ./docker-compose-deploy.yml down
-            docker compose -f ./docker-compose-deploy.yml up -d
+            docker-compose -f ./docker-compose-deploy.yml down
+            docker-compose -f ./docker-compose-deploy.yml up -d
