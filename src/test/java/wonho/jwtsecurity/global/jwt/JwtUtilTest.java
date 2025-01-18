@@ -9,7 +9,6 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 import org.junit.jupiter.api.BeforeAll;
@@ -25,7 +24,6 @@ class JwtUtilTest {
 
     private JwtUtil jwtUtil;
     private String secretKey;
-    private Key base64EncodedSecretKey;
 
     @BeforeAll
     void setUp() {
