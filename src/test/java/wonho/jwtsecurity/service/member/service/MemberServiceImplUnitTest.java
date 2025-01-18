@@ -18,6 +18,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import wonho.jwtsecurity.global.exception.BusinessException;
+import wonho.jwtsecurity.global.exception.ExceptionCode;
 import wonho.jwtsecurity.service.member.domain.AuthorityEnum;
 import wonho.jwtsecurity.service.member.domain.Member;
 import wonho.jwtsecurity.service.member.domain.MemberUserRole;
@@ -88,9 +90,9 @@ class MemberServiceImplUnitTest {
         when(memberRepository.existsByUsername(username)).thenReturn(true);
 
         // When & Then
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+        BusinessException exception = assertThrows(BusinessException.class,
                 () -> memberService.signUp(requestDto));
-        assertEquals("이미 존재하는 아이디 입니다.", exception.getMessage());
+        assertEquals(ExceptionCode.DUPLICATED_USER.getMessage(), exception.getMessage());
     }
 
     @Test
@@ -107,8 +109,8 @@ class MemberServiceImplUnitTest {
         when(userRoleRepository.findByAuthority(AuthorityEnum.ROLE_USER)).thenReturn(Optional.empty());
 
         // When & Then
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+        BusinessException exception = assertThrows(BusinessException.class,
                 () -> memberService.signUp(requestDto));
-        assertEquals("존재하지 않는 권한입니다.", exception.getMessage());
+        assertEquals(ExceptionCode.NOT_FOUND_ROLE.getMessage(), exception.getMessage());
     }
 }
