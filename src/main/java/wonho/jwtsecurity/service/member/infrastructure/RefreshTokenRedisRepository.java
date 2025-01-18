@@ -1,5 +1,6 @@
 package wonho.jwtsecurity.service.member.infrastructure;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,10 +25,10 @@ public class RefreshTokenRedisRepository implements RefreshTokenRepository {
     }
 
     @Override
-    public String findByUsername(String username) {
+    public Optional<String> findByUsername(String username) {
 
         String key = PREFIX + username;
 
-        return redisTemplate.opsForValue().get(key);
+        return Optional.ofNullable(redisTemplate.opsForValue().get(key));
     }
 }

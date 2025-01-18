@@ -35,4 +35,13 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(memberService.sign(memberLoginRequestDto));
     }
+
+    @PostMapping("/refresh-token")
+    public ResponseEntity<String> refreshToken(
+            @RequestBody final String refreshToken
+    ) {
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(memberService.refreshToken(refreshToken));
+    }
 }

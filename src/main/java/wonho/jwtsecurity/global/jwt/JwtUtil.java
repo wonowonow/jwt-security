@@ -16,10 +16,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+@Slf4j
 @Component
 public class JwtUtil {
 
@@ -30,8 +32,8 @@ public class JwtUtil {
     private static final String BEARER = "Bearer ";
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final Long EXPIRATION_TIME = 60 * 60 * 1000L;
-    public static final Long REFRESH_TOKEN_EXPIRATION_TIME = 60 * 60 * 1000L * 24 * 7;
-    private static final String USERNAME = "Username";
+    public static final Long REFRESH_TOKEN_EXPIRATION_TIME = 60L;
+    public static final String USERNAME = "Username";
 
     public JwtUtil(@Value("${jwt.secret}") String secret) {
         byte[] bytes = Base64.getDecoder().decode(secret);
@@ -83,13 +85,17 @@ public class JwtUtil {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             return true;
         } catch (SecurityException | MalformedJwtException | SignatureException e) {
-            throw new JwtException("ExceptionCode.TOKEN_INVALID");
+            log.error(e.getMessage());
+            return false;
         } catch (ExpiredJwtException e) {
-            throw new JwtException("ExceptionCode.TOKEN_EXPIRED");
+            log.error(e.getMessage());
+            return false;
         } catch (UnsupportedJwtException e) {
-            throw new JwtException("ExceptionCode.TOKEN_UNSUPPORTED");
+            log.error(e.getMessage());
+            return false;
         } catch (IllegalArgumentException e) {
-            throw new JwtException("ExceptionCode.TOKEN_EMPTY");
+            log.error(e.getMessage());
+            return false;
         }
     }
 
