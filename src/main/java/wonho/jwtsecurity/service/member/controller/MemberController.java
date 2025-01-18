@@ -11,7 +11,6 @@ import wonho.jwtsecurity.service.member.dto.req.MemberLoginRequestDto;
 import wonho.jwtsecurity.service.member.dto.req.RefreshTokenRequestDto;
 import wonho.jwtsecurity.service.member.dto.res.MemberResponseDto;
 import wonho.jwtsecurity.service.member.dto.res.AllTokenResponseDto;
-import wonho.jwtsecurity.service.member.dto.res.TokenResponseDto;
 import wonho.jwtsecurity.service.member.service.interfaces.MemberService;
 
 @RestController
@@ -39,7 +38,7 @@ public class MemberController {
     }
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<TokenResponseDto> refreshToken(
+    public ResponseEntity<AllTokenResponseDto> refreshToken(
             @RequestBody final RefreshTokenRequestDto requestDto
     ) {
 

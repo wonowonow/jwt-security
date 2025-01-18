@@ -4,7 +4,6 @@ import wonho.jwtsecurity.service.member.dto.req.MemberCreateRequestDto;
 import wonho.jwtsecurity.service.member.dto.req.MemberLoginRequestDto;
 import wonho.jwtsecurity.service.member.dto.res.MemberResponseDto;
 import wonho.jwtsecurity.service.member.dto.res.AllTokenResponseDto;
-import wonho.jwtsecurity.service.member.dto.res.TokenResponseDto;
 
 public interface MemberService {
     MemberResponseDto signUp(MemberCreateRequestDto requestDto);
@@ -21,5 +20,5 @@ public interface MemberService {
      * @param refreshToken
      * @return
      */
-    TokenResponseDto refreshToken(String refreshToken);
+    AllTokenResponseDto refreshToken(String refreshToken);
 }
