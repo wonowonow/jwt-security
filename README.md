@@ -14,6 +14,8 @@ Spring Security를 사용하여 JWT 필터를 통해 로그인을 구현했습�
 
 ## API
 
+[Swagger UI 로 접속하여 API 목록을 확인 할 수 있습니다.](http://54.180.221.241:8080/swagger-ui/index.html)
+
 1. 회원가입 (POST /signup)
     - Request Message
 
@@ -82,6 +84,4 @@ Spring Security를 사용하여 JWT 필터를 통해 로그인을 구현했습�
            "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
        }
        ```
-
-주소란에 주소/swagger-ui/index.html 을 입력하시면 Swagger UI 로 접속하여 API 목록을 확인 할 수 있습니다. (주소 추후 업데이트 예정)
 
