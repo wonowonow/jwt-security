@@ -16,6 +16,7 @@ env:
   DEPLOY_REDIS_PASSWORD: ${{ secrets.DEPLOY_REDIS_PASSWORD }}
   JWT_SECRET_FOR_DEPLOY: ${{ secrets.JWT_SECRET_FOR_DEPLOY }}
   POSTGRES_HOST: jwt-security-db
+  REDIS_HOST: jwt-security-redis
 
 jobs:
   build:
@@ -84,6 +85,7 @@ jobs:
           key: ${{ env.AWS_EC2_SSH_KEY }}
           script: |
             export POSTGRES_HOST=${{ env.POSTGRES_HOST }}
+            export REDIS_HOST=${{ env.REDIS_HOST }}
             export DOCKER_HUB_USERNAME=${{ env.DOCKER_HUB_USERNAME }}
             export DEPLOY_POSTGRES_DB=${{ env.DEPLOY_POSTGRES_DB }}
             export DEPLOY_POSTGRES_USER=${{ env.DEPLOY_POSTGRES_USER }}
