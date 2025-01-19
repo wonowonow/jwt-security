@@ -36,6 +36,37 @@ Spring Security를 사용하여 JWT 필터를 통해 로그인을 구현했습�
 
 ---
 
+## Login 및 AccessToken 만료 시 재발급 로직
+
+Controller 등은 이미지에서 제외했습니다. 
+
+### Login
+
+![login](./docs/images/login.png)
+
+1. 유저 검증
+2. RefreshTokenRepository 를 통해 RefreshToken 을 저장합니다.
+   - Key = refreshToken: "아이디"
+   - Value = JWT
+   - TTL = 7일
+3. Http Response 에 AccessToken 및 RefreshToken 포함하여 응답합니다.
+
+### AccessToken 만료 시 재발급
+
+![ifExpiredAccessToken](./docs/images/ifExpiredAccessToken.png)
+
+1. 프론트에서 AccessToken 을 헤더에 포함하여 요청합니다.
+2. Filter 의 AccessToken 이 유효하지 않다면 401 응답을 합니다.
+3. 프론트에서 AccessToken 을 삭제 합니다.
+4. 만약 RefreshToken 이 있으면 바디에 RefreshToken 을 담아서 POST /refresh-token 요청합니다.
+5. JWT 검증 및 유저 검증
+6. RefreshTokenRepository 를 통한 RefreshToken 을 새로 저장합니다.
+   - 이 과정을 통해서 기존 RefreshToken 은 지워지고 새로 갱신이 됩니다.
+   - (RefreshToken 갱신 기준은 자유롭게 결정할 수 있습니다.)
+7. AccessToken 과 RefreshToken 을 Body에 포함하여 응답합니다.
+
+---
+
 ## API
 
 [Swagger UI 로 접속하여 API 목록을 확인 할 수 있습니다.](http://54.180.221.241:8080/swagger-ui/index.html)
