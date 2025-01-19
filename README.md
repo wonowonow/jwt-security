@@ -12,6 +12,30 @@ Spring Security를 사용하여 JWT 필터를 통해 로그인을 구현했습�
 
 ---
 
+## 시큐리티 필터 (with JWT) 및 계층 다이어그램 
+
+![securityAndLayerDiagram](./docs/images/securityAndLayerDiagram.png)
+
+### Security 흐름 정리
+
+1. Http 요청 (with JWT) 요청이 들어오면 Spring Security 의 Filter Chain Proxy 로 전달됩니다.
+2. AccessTokenFilter 에서 요청 헤더의 JWT를 추출합니다.
+   1. JWT 의 유효성을 검사하고, 사용자 정보를 가져옵니다.
+   2. 사용자 정보를 기반으로 UserDetailsService 를 호출하여 사용자 정보를 가져옵니다.
+   3. 인증 정보를 가지고 SecurityContextHolder 에 설정 합니다.
+3. SecurityContextHolder
+   - 인증 정보를 저장합니다.
+   - 저장 된 정보를 가지고 Controller 등에 활용합니다.
+
+### 전체 레이어 흐름 (DIP 포함)
+
+1. Controller는 HTTP 요청을 받아 Service Interface를 호출합니다.
+2. Service Interface는 비즈니스 로직을 수행하기 위해 Service Implementation에 요청을 전달합니다.
+3. Service Implementation은 Repository Interface를 통해 DB 작업을 요청합니다.
+4. Repository Interface는 Infrastructure 계층의 Repository Implementation을 통해 실제 DB와 연결하여 데이터를 저장, 수정, 읽기 등의 작업을 수행합니다.
+
+---
+
 ## API
 
 [Swagger UI 로 접속하여 API 목록을 확인 할 수 있습니다.](http://54.180.221.241:8080/swagger-ui/index.html)
