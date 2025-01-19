@@ -11,6 +11,7 @@ import static wonho.jwtsecurity.service.member.domain.AuthorityEnum.ROLE_USER;
 import io.jsonwebtoken.Claims;
 import java.util.HashSet;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import wonho.jwtsecurity.service.member.dto.res.MemberResponseDto;
 import wonho.jwtsecurity.service.member.service.interfaces.MemberService;
 
 @Service
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
@@ -63,6 +65,8 @@ public class MemberServiceImpl implements MemberService {
             throw new BusinessException(NOT_MATCH_PASSWORD);
         }
 
+        log.info(requestDto.password());
+
         String token = jwtUtil.createToken(member.getUsername());
         String refreshToken = jwtUtil.createRefreshToken(member.getUsername());
         refreshTokenRepository.save(member.getUsername(), refreshToken);
@@ -94,6 +98,8 @@ public class MemberServiceImpl implements MemberService {
             throw new BusinessException(NOT_FOUND_USER);
         }
 
-        return AllTokenResponseDto.of(jwtUtil.createToken(username), refreshTokenRepository.save(username, refreshToken));
+        String newRefreshToken = jwtUtil.createRefreshToken(username);
+
+        return AllTokenResponseDto.of(jwtUtil.createToken(username), refreshTokenRepository.save(username, newRefreshToken));
     }
 }
