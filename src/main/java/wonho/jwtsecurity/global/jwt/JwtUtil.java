@@ -32,7 +32,7 @@ public class JwtUtil {
     private static final String BEARER = "Bearer ";
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final Long EXPIRATION_TIME = 60 * 60 * 1000L;
-    public static final Long REFRESH_TOKEN_EXPIRATION_TIME = 60L;
+    public static final Long REFRESH_TOKEN_EXPIRATION_TIME = 60L * 60 * 1000L * 24 * 7;
     public static final String USERNAME = "Username";
 
     public JwtUtil(@Value("${jwt.secret}") String secret) {
